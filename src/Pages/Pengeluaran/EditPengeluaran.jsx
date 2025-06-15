@@ -1,23 +1,47 @@
 import { useNavigate, useParams } from "react-router-dom";
+import { getPengeluaranDetail, updatePengeluaran } from "../../Api/PengeluaranService";
+import { useState, useEffect } from "react";
 
 const EditPengeluaran = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [pengeluaran, setPengeluaran] = useState([])
 
-  // Sample data
-  const pengeluaran = {
-    id: id,
-    tanggal: "2023-01-15",
-    kategori: "Listrik",
-    jumlah: "500000",
-    keterangan: "Pembayaran PLN",
-  };
+  useEffect(() => {
+    const fetchPengeluaran = async () => {
+      try {
+        const response = await getPengeluaranDetail(id);
+        setPengeluaran(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching pengeluaran:", error);
+        setError(error);
+        setLoading(false);
+      }
+    };
+
+    fetchPengeluaran();
+  }, [id]);  
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add logic to update data
+
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+    updatePengeluaran(id, data);
+
     navigate("/pengeluaran");
   };
+
+  if (loading) {
+    return <div className="text-center py-4">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center py-4 text-red-500">Error: {error}</div>;
+  }
 
   return (
     <div>
@@ -25,7 +49,7 @@ const EditPengeluaran = () => {
 
       <div className="bg-white shadow rounded-lg p-6">
         <form onSubmit={handleSubmit}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="flex flex-col gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Tanggal
@@ -33,25 +57,22 @@ const EditPengeluaran = () => {
               <input
                 type="date"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                defaultValue={pengeluaran.tanggal}
                 required
+                name="tanggal"
+                defaultValue={pengeluaran.tanggal}
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Kategori
+                Nama Pengeluaran
               </label>
-              <select
+              <input
+                type="text"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                defaultValue={pengeluaran.kategori}
                 required
-              >
-                <option value="Listrik">Listrik</option>
-                <option value="Air">Air</option>
-                <option value="Kebersihan">Kebersihan</option>
-                <option value="Perbaikan">Perbaikan</option>
-                <option value="Lainnya">Lainnya</option>
-              </select>
+                name="nama"
+                defaultValue={pengeluaran.nama}
+              />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -60,8 +81,9 @@ const EditPengeluaran = () => {
               <input
                 type="text"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                defaultValue={pengeluaran.jumlah}
                 required
+                name="jumlah"
+                defaultValue={pengeluaran.jumlah}
               />
             </div>
             <div className="md:col-span-2">
@@ -71,8 +93,8 @@ const EditPengeluaran = () => {
               <textarea
                 className="w-full px-3 py-2 border border-gray-300 rounded-md"
                 rows={3}
-                defaultValue={pengeluaran.keterangan}
-                required
+                name="keterangan"
+                defaultValue={pengeluaran.keterangan ?? ""}
               ></textarea>
             </div>
           </div>
@@ -89,7 +111,7 @@ const EditPengeluaran = () => {
               type="submit"
               className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
             >
-              Simpan Perubahan
+              Simpan
             </button>
           </div>
         </form>

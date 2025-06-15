@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { getPengeluaranList } from "../../Api/PengeluaranService";
+import { getPengeluaranList, deletePengeluaran } from "../../Api/PengeluaranService";
 
 const PengeluaranList = () => {
   const [pengeluaran, setPengeluaran] = useState([]);
@@ -21,7 +21,17 @@ const PengeluaranList = () => {
     fetchData();
   }, []);
 
-  console.log(pengeluaran);
+  const handleDelete = async (id) => {
+    if (window.confirm("Apakah Anda yakin ingin menghapus pengeluaran ini?")) {
+      try {
+        await deletePengeluaran(id);
+        setPengeluaran(pengeluaran.filter((item) => item.id_pengeluaran !== id));
+      } catch (err) {
+        console.error("Error deleting pengeluaran:", err);
+      }
+    }
+  };
+
   if (loading) {
     return <div className="text-center py-4">Loading...</div>;
   }
@@ -79,6 +89,12 @@ const PengeluaranList = () => {
                   {pengeluaran.keterangan}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap space-x-2">
+                  <button
+                    onClick={() => handleDelete(pengeluaran.id_pengeluaran)}
+                    className="text-red-600 hover:text-red-900"
+                  >
+                    Hapus
+                  </button>
                   <Link
                     to={`/pengeluaran/edit/${pengeluaran.id_pengeluaran}`}
                     className="text-yellow-600 hover:text-yellow-900"
