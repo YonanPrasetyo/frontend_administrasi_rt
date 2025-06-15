@@ -1,23 +1,34 @@
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { getPengeluaranList } from "../../Api/PengeluaranService";
 
 const PengeluaranList = () => {
-  // Sample data
-  const pengeluaranList = [
-    {
-      id: 1,
-      kategori: "Listrik",
-      jumlah: "Rp 500,000",
-      tanggal: "2023-01-15",
-      keterangan: "Pembayaran PLN",
-    },
-    {
-      id: 2,
-      kategori: "Air",
-      jumlah: "Rp 300,000",
-      tanggal: "2023-01-20",
-      keterangan: "Pembayaran PDAM",
-    },
-  ];
+  const [pengeluaran, setPengeluaran] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getPengeluaranList();
+        setPengeluaran(response.data);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  console.log(pengeluaran);
+  if (loading) {
+    return <div className="text-center py-4">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center py-4 text-red-500">Error: {error}</div>;
+  }
 
   return (
     <div>
@@ -53,29 +64,23 @@ const PengeluaranList = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {pengeluaranList.map((pengeluaran) => (
+            {pengeluaran.map((pengeluaran) => (
               <tr key={pengeluaran.id}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {pengeluaran.tanggal}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {pengeluaran.kategori}
+                  {pengeluaran.nama}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {pengeluaran.jumlah}
+                  Rp. {pengeluaran.jumlah.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {pengeluaran.keterangan}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap space-x-2">
                   <Link
-                    to={`/pengeluaran/detail/${pengeluaran.id}`}
-                    className="text-indigo-600 hover:text-indigo-900"
-                  >
-                    Detail
-                  </Link>
-                  <Link
-                    to={`/pengeluaran/edit/${pengeluaran.id}`}
+                    to={`/pengeluaran/edit/${pengeluaran.id_pengeluaran}`}
                     className="text-yellow-600 hover:text-yellow-900"
                   >
                     Edit
