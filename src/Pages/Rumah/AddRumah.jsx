@@ -9,7 +9,6 @@ const AddRumah = () => {
 
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
-    console.log(data);
     createRumah(data);
 
     navigate("/rumah");

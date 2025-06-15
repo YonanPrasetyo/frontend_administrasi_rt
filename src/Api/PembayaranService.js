@@ -1,3 +1,4 @@
+import { data } from "react-router-dom";
 import api from "./Api";
 
 export const getPembayaranList = async () => {
@@ -9,3 +10,13 @@ export const getPembayaranList = async () => {
         throw error;
     }
 };
+
+export const createPembayaran = async (data) => {
+    try {
+        const response = await api.post("/pembayaran", data);
+        return response.data;
+    } catch (error) {
+        console.error("Error creating pembayaran:", error);
+        throw error;
+    }
+}

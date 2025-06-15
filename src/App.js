@@ -36,7 +36,7 @@ function App() {
 
           {/* Pembayaran Routes */}
           <Route path="/pembayaran" element={<PembayaranList />} />
-          <Route path="/pembayaran/add" element={<AddPembayaran />} />
+          <Route path="/pembayaran/add/:id" element={<AddPembayaran />} />
 
           {/* Pengeluaran Routes */}
           <Route path="/pengeluaran" element={<PengeluaranList />} />

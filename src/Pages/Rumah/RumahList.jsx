@@ -40,8 +40,6 @@ const RumahList = () => {
     return <div className="text-center py-4 text-red-500">Error: {error}</div>;
   }
 
-  
-
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
@@ -68,6 +66,12 @@ const RumahList = () => {
                 Status
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Pembayaran Terakhir
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Pembayaran
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Aksi
               </th>
             </tr>
@@ -91,6 +95,24 @@ const RumahList = () => {
                   >
                     {rumah.status_rumah}
                   </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {rumah.bulan_pembayaran_terakhir === null &&
+                  rumah.tahun_pembayaran_terakhir === null
+                    ? "Belum ada pembayaran"
+                    : `${rumah.bulan_pembayaran_terakhir}  ${rumah.tahun_pembayaran_terakhir}`}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {rumah.status_rumah === "dihuni" ? (
+                    <Link
+                      to={`/pembayaran/add/${rumah.id_rumah}`}
+                      className="text-indigo-600 hover:text-indigo-900"
+                    >
+                      Pembayaran
+                    </Link>
+                  ) : (
+                    "Tidak dihuni"
+                  )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap space-x-2">
                   <Link
