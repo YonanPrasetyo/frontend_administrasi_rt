@@ -74,7 +74,7 @@ const AddPembayaran = () => {
     const data = Object.fromEntries(formData);
     data["id_rumah"] = id;
     createPembayaran(data);
-    navigate("/pembayaran");
+    navigate("/rumah");
   };
 
   return (
@@ -172,7 +172,7 @@ const AddPembayaran = () => {
           <div className="mt-6 flex justify-end space-x-3">
             <button
               type="button"
-              onClick={() => navigate("/pembayaran")}
+              onClick={() => navigate("/rumah")}
               className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
             >
               Batal

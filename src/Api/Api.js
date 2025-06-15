@@ -8,6 +8,22 @@ const api = axios.create({
   },
 });
 
+const imageApi = axios.create({
+  baseURL: process.env.REACT_APP_API_URL,
+  timeout: 30000, 
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
+});
+
+imageApi.interceptors.request.use((config) => {
+  if (config.method === "put" && config.data instanceof FormData) {
+    config.data.append("_method", "PUT");
+    config.method = "post";
+  }
+  return config;
+});
+
 // Interceptor untuk menambahkan token
 // api.interceptors.request.use((config) => {
 //   const token = localStorage.getItem("token");
@@ -17,4 +33,4 @@ const api = axios.create({
 //   return config;
 // });
 
-export default api;
+export { api, imageApi };

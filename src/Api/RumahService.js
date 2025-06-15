@@ -1,5 +1,5 @@
 import { data } from "react-router-dom";
-import api from "./Api";
+import { api } from "./Api";
 
 export const getRumahList = async () => {
   try {

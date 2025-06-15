@@ -63,10 +63,13 @@ const RumahList = () => {
                 Jumalh Penghuni
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Status
+                Status Huni
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Pembayaran Terakhir
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Status Pembayaran
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Pembayaran
@@ -97,18 +100,44 @@ const RumahList = () => {
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {rumah.bulan_pembayaran_terakhir === null &&
-                  rumah.tahun_pembayaran_terakhir === null
-                    ? "Belum ada pembayaran"
-                    : `${rumah.bulan_pembayaran_terakhir}  ${rumah.tahun_pembayaran_terakhir}`}
+                  {rumah.bulan_terakhir_satpam === null &&
+                  rumah.bulan_terakhir_kebersihan === null ? (
+                    <span>Belum ada pembayaran</span>
+                  ) : (
+                    <div className="text-sm text-gray-900 space-y-1">
+                      <div>
+                        Satpam: {rumah.bulan_terakhir_satpam}{" "}
+                        {rumah.tahun_terakhir_satpam}
+                      </div>
+                      <div>
+                        Kebersihan: {rumah.bulan_terakhir_kebersihan}{" "}
+                        {rumah.tahun_terakhir_kebersihan}
+                      </div>
+                    </div>
+                  )}
                 </td>
+
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      rumah.status_lunas === "belum lunas"
+                        ? "bg-red-100 text-red-800"
+                        : rumah.status_lunas === "lunas"
+                        ? "bg-green-100 text-green-800"
+                        : "bg-yellow-100 text-yellow-800"
+                    }`}
+                  >
+                    {rumah.status_lunas}
+                  </span>
+                </td>
+
                 <td className="px-6 py-4 whitespace-nowrap">
                   {rumah.status_rumah === "dihuni" ? (
                     <Link
                       to={`/pembayaran/add/${rumah.id_rumah}`}
                       className="text-indigo-600 hover:text-indigo-900"
                     >
-                      Pembayaran
+                      Bayar
                     </Link>
                   ) : (
                     "Tidak dihuni"

@@ -56,6 +56,9 @@ const PenghuniList = () => {
                 Nama Lengkap
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Nomor Rumah
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Status Tinggal
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -76,6 +79,9 @@ const PenghuniList = () => {
                   {p.nama_lengkap}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
+                  {p.nomor_rumah}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
                   {p.status_penghuni}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
@@ -86,19 +92,19 @@ const PenghuniList = () => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap space-x-2">
                   <Link
-                    to={`/penghuni/detail/${p.id}`}
+                    to={`/penghuni/detail/${p.id_penghuni}`}
                     className="text-indigo-600 hover:text-indigo-900"
                   >
                     Detail
                   </Link>
                   <Link
-                    to={`/penghuni/edit/${p.id}`}
+                    to={`/penghuni/edit/${p.id_penghuni}`}
                     className="text-yellow-600 hover:text-yellow-900"
                   >
                     Edit
                   </Link>
                   <button
-                    onClick={() => handleDelete(p.id)}
+                    onClick={() => handleDelete(p.id_penghuni)}
                     className="text-red-600 hover:text-red-900"
                   >
                     Hapus

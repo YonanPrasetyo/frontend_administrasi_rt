@@ -1,4 +1,4 @@
-import api from "./Api";
+import{ api, imageApi } from "./Api";
 
 export const getPenghuniList = async () => {
   try {
@@ -22,7 +22,7 @@ export const getPenghuniDetail = async (id) => {
 
 export const createPenghuni = async (data) => {
   try {
-    const response = await api.post("/penghuni", data);
+    const response = await imageApi.post("/penghuni", data);
     return response.data;
   } catch (error) {
     console.error("Error creating penghuni:", error);
@@ -32,7 +32,7 @@ export const createPenghuni = async (data) => {
 
 export const updatePenghuni = async (id, data) => {
   try {
-    const response = await api.put(`/penghuni/${id}`, data);
+    const response = await imageApi.post(`/penghuni/${id}`, data);
     return response.data;
   } catch (error) {
     console.error(`Error updating penghuni ${id}:`, error);
