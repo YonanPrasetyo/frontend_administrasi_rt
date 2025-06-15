@@ -20,3 +20,13 @@ export const createPembayaran = async (data) => {
         throw error;
     }
 }
+
+export const deletePembayaran = async (id) => {
+    try {
+        const response = await api.delete(`/pembayaran/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error(`Error deleting pembayaran ${id}:`, error);
+        throw error;
+    }
+}

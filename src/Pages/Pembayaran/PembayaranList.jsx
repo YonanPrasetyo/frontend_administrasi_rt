@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { getPembayaranList } from "../../Api/PembayaranService";
 import { useState, useEffect } from "react";
+import { getPembayaranList, deletePembayaran } from "../../Api/PembayaranService";
 
 const PembayaranList = () => {
   const [pembayaran, setPembayaran] = useState([]);
@@ -20,6 +20,17 @@ const PembayaranList = () => {
     };
     fetchData();
   })
+
+  const handleDelete = async (id) => {
+    if (window.confirm("Apakah Anda yakin ingin menghapus pembayaran ini?")) {
+      try {
+        await deletePembayaran(id);
+        setPembayaran(pembayaran.filter((item) => item.id_pembayaran !== id));
+      } catch (err) {
+        console.error("Error deleting pembayaran:", err);
+      }
+    }
+  };
 
   if (loading) {
     return <div className="text-center py-4">Loading...</div>;
@@ -102,16 +113,10 @@ const PembayaranList = () => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap space-x-2">
                   <Link
-                    to={`/pembayaran/detail/${pembayaran.id}`}
-                    className="text-indigo-600 hover:text-indigo-900"
+                    onClick={() => handleDelete(pembayaran.id_pembayaran)}
+                    className="text-red-600 hover:text-red-900"
                   >
-                    Detail
-                  </Link>
-                  <Link
-                    to={`/pembayaran/edit/${pembayaran.id}`}
-                    className="text-yellow-600 hover:text-yellow-900"
-                  >
-                    Edit
+                    Hapus
                   </Link>
                 </td>
               </tr>
