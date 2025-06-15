@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getRumahList } from "../../Api/RumahService";
+import { getRumahList, deleteRumah } from "../../Api/RumahService";
 
 const RumahList = () => {
   const [rumah, setRumah] = useState([]);
@@ -11,7 +11,7 @@ const RumahList = () => {
     const fetchData = async () => {
       try {
         const data = await getRumahList();
-        setRumah(data);
+        setRumah(data.data);
         setLoading(false);
       } catch (err) {
         setError(err.message);
@@ -20,6 +20,17 @@ const RumahList = () => {
     };
     fetchData();
   }, []);
+
+  const handleDelete = async (id) => {
+    if (window.confirm("Apakah Anda yakin ingin menghapus rumah ini?")) {
+      try {
+        await deleteRumah(id);
+        setRumah(rumah.filter((item) => item.id_rumah !== id));
+      } catch (err) {
+        console.error("Error deleting rumah:", err);
+      }
+    }
+  };
 
   if (loading) {
     return <div className="text-center py-4">Loading...</div>;
@@ -51,6 +62,9 @@ const RumahList = () => {
                 Nomor Rumah
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Jumalh Penghuni
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Status
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -59,13 +73,18 @@ const RumahList = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {rumah.data.map((rumah) => (
+            {rumah.map((rumah) => (
               <tr key={rumah.id_rumah}>
-                <td className="px-6 py-4 whitespace-nowrap">{rumah.nomor_rumah}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {rumah.nomor_rumah}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {rumah.jumlah_penghuni_rumah}
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span
                     className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      rumah.status_rumah === "Terisi"
+                      rumah.status_rumah === "tidak dihuni"
                         ? "bg-red-100 text-red-800"
                         : "bg-green-100 text-green-800"
                     }`}
@@ -86,6 +105,12 @@ const RumahList = () => {
                   >
                     Edit
                   </Link>
+                  <button
+                    onClick={() => handleDelete(rumah.id_rumah)}
+                    className="text-red-600 hover:text-red-900"
+                  >
+                    Hapus
+                  </button>
                 </td>
               </tr>
             ))}

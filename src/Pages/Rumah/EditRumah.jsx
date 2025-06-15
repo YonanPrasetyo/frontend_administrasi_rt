@@ -1,22 +1,38 @@
 import { useNavigate, useParams } from "react-router-dom";
+import { updateRumah, getRumahDetail } from "../../Api/RumahService";
+import { useState, useEffect } from "react";
 
 const EditRumah = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // Sample data
-  const rumah = {
-    id: id,
-    nomor: "A1",
-    type: "Single",
-    harga: "1500000",
-    status: "Terisi",
-    fasilitas: "AC, Kamar Mandi Dalam, WiFi",
-  };
+  const [rumah, setRumah] = useState({
+    data: {
+      nomor_rumah: "",
+    },
+  });
+
+  useEffect(() => {
+    const fetchRumah = async () => {
+      try {
+        const response = await getRumahDetail(id);
+        setRumah(response);
+      } catch (error) {
+        console.error("Error fetching rumah:", error);
+      }
+    };
+
+    fetchRumah();
+  }, [id]);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add logic to update data
+
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+    updateRumah(id, data);
+
     navigate("/rumah");
   };
 
@@ -33,58 +49,11 @@ const EditRumah = () => {
               </label>
               <input
                 type="text"
+                name = "nomor_rumah"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                defaultValue={rumah.nomor}
+                defaultValue={rumah.data.nomor_rumah}
                 required
               />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Type
-              </label>
-              <select
-                className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                defaultValue={rumah.type}
-                required
-              >
-                <option value="Single">Single</option>
-                <option value="Double">Double</option>
-                <option value="Family">Family</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Harga Sewa
-              </label>
-              <input
-                type="text"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                defaultValue={rumah.harga}
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Status
-              </label>
-              <select
-                className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                defaultValue={rumah.status}
-                required
-              >
-                <option value="Kosong">Kosong</option>
-                <option value="Terisi">Terisi</option>
-              </select>
-            </div>
-            <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Fasilitas
-              </label>
-              <textarea
-                className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                rows={3}
-                defaultValue={rumah.fasilitas}
-              ></textarea>
             </div>
           </div>
 
