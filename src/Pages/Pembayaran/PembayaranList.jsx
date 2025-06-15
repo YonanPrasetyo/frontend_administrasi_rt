@@ -1,27 +1,33 @@
 import { Link } from "react-router-dom";
+import { getPembayaranList } from "../../Api/PembayaranService";
+import { useState, useEffect } from "react";
 
 const PembayaranList = () => {
-  // Sample data
-  const pembayaranList = [
-    {
-      id: 1,
-      penghuni: "John Doe",
-      rumah: "A1",
-      bulan: "Januari 2023",
-      jumlah: "Rp 1,500,000",
-      tanggal: "2023-01-05",
-      status: "Lunas",
-    },
-    {
-      id: 2,
-      penghuni: "Jane Smith",
-      rumah: "B2",
-      bulan: "Januari 2023",
-      jumlah: "Rp 2,000,000",
-      tanggal: "2023-01-10",
-      status: "Lunas",
-    },
-  ];
+  const [pembayaran, setPembayaran] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useState(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getPembayaranList();
+        setPembayaran(response.data);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+    fetchData();
+  })
+
+  if (loading) {
+    return <div className="text-center py-4">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center py-4 text-red-500">Error: {error}</div>;
+  }
 
   return (
     <div>
@@ -43,19 +49,19 @@ const PembayaranList = () => {
                 Penghuni
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Rumah
+                Nomor Rumah
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Bulan
+                Tanggal Pembayaran
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Jenis Iuran
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Jumlah
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Tanggal
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Status
+                Iuran Bulan
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Aksi
@@ -63,22 +69,25 @@ const PembayaranList = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {pembayaranList.map((pembayaran) => (
-              <tr key={pembayaran.id}>
+            {pembayaran.map((pembayaran) => (
+              <tr key={pembayaran.id_pembayaran}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {pembayaran.penghuni}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {pembayaran.rumah}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {pembayaran.bulan}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {pembayaran.jumlah}
+                  {pembayaran.nomor_rumah}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {pembayaran.tanggal}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {pembayaran.jenis}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  Rp. {pembayaran.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {pembayaran.bulan} {pembayaran.tahun}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span
