@@ -17,8 +17,9 @@ cp .env.example .env
 ```
 - Ganti konfigurasi berikut:
 ```env
-REACT_APP_API_URL=masukkan_url_api_backend
+REACT_APP_API_URL=masukkan_url_api_backend + /api
 ```
+jangan lupa tambahkan /api di belakangnya
 
 4. Jalankan Aplikasi
 ```bash
