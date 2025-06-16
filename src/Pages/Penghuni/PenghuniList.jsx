@@ -11,7 +11,7 @@ const PenghuniList = () => {
     const fetchData = async () => {
       try {
         const data = await getPenghuniList();
-        setPenghuni(data);
+        setPenghuni(data.data);
         setLoading(false);
       } catch (err) {
         setError(err.message);
@@ -73,7 +73,7 @@ const PenghuniList = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {penghuni.data.map((p) => (
+            {penghuni.map((p) => (
               <tr key={p.id}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {p.nama_lengkap}
