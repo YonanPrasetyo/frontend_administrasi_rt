@@ -9,6 +9,7 @@ import RumahList from "./Pages/Rumah/RumahList";
 import AddRumah from "./Pages/Rumah/AddRumah";
 import EditRumah from "./Pages/Rumah/EditRumah";
 import DetailRumah from "./Pages/Rumah/DetailRumah";
+import History from "./Pages/Rumah/History";
 import PembayaranList from "./Pages/Pembayaran/PembayaranList";
 import AddPembayaran from "./Pages/Pembayaran/AddPembayaran";
 import PengeluaranList from "./Pages/Pengeluaran/PengeluaranList";
@@ -35,6 +36,7 @@ function App() {
           <Route path="/rumah/add" element={<AddRumah />} />
           <Route path="/rumah/edit/:id" element={<EditRumah />} />
           <Route path="/rumah/detail/:id" element={<DetailRumah />} />
+          <Route path="/rumah/history/:id" element={<History />} />
 
           {/* Pembayaran Routes */}
           <Route path="/pembayaran" element={<PembayaranList />} />

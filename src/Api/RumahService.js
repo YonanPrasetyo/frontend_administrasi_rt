@@ -1,4 +1,3 @@
-import { data } from "react-router-dom";
 import { api } from "./Api";
 
 export const getRumahList = async () => {
@@ -67,6 +66,17 @@ export const removePenghuni = async (id, data) => {
     return response.data;
   } catch (error) {
     console.error("Error removing penghuni:", error);
+    throw error;
+  }
+};
+
+
+export const getHistoryByRumah = async (id) => {
+  try {
+    const response = await api.get(`/rumah-history/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching history for rumah ${id}:`, error);
     throw error;
   }
 };
