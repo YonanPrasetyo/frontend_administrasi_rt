@@ -1,19 +1,40 @@
 import { useParams, Link } from "react-router-dom";
+import { getPenghuniDetail } from "../../Api/PenghuniService";
+import { useEffect, useState } from "react";
 
 const DetailPenghuni = () => {
   const { id } = useParams();
 
-  // In a real app, you would fetch the data based on the id
-  const penghuni = {
-    id: id,
-    nama: "John Doe",
-    kamar: "A1",
-    telepon: "08123456789",
-    email: "john@example.com",
-    tanggalMasuk: "2023-01-15",
-    alamat: "Jl. Contoh No. 123",
-    ktp: "1234567890123456",
-  };
+  const [penghuni, setPenghuni] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+
+  useEffect(() => {
+    const fetchPenghuni = async () => {
+      try {
+        const response = await getPenghuniDetail(id);
+        setPenghuni(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching penghuni:", error);
+        setError(error);
+        setLoading(false);
+      }
+    };
+
+    fetchPenghuni();
+  }, [id]);
+
+  console.log(penghuni);
+
+  if (loading) {
+    return <div className="text-center py-4">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center py-4 text-red-500">Error: {error}</div>;
+  }
 
   return (
     <div>
@@ -29,8 +50,12 @@ const DetailPenghuni = () => {
 
       <div className="bg-white shadow rounded-lg overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-200">
-          <h2 className="text-lg font-medium text-gray-900">{penghuni.nama}</h2>
-          <p className="text-sm text-gray-500">Kamar: {penghuni.kamar}</p>
+          <h2 className="text-lg font-medium text-gray-900">
+            {penghuni.nama_lengkap}
+          </h2>
+          <p className="text-sm text-gray-500">
+            Status: {penghuni.status_penghuni}
+          </p>
         </div>
         <div className="px-6 py-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -38,27 +63,48 @@ const DetailPenghuni = () => {
               <h3 className="text-sm font-medium text-gray-500">
                 Nomor Telepon
               </h3>
-              <p className="mt-1 text-sm text-gray-900">{penghuni.telepon}</p>
+              <p className="mt-1 text-sm text-gray-900">
+                {penghuni.nomor_telepon}
+              </p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-gray-500">Email</h3>
-              <p className="mt-1 text-sm text-gray-900">{penghuni.email}</p>
+              <h3 className="text-sm font-medium text-gray-500">
+                Status Pernikahan
+              </h3>
+              <p className="mt-1 text-sm text-gray-900">
+                {penghuni.status_nikah}
+              </p>
             </div>
             <div>
               <h3 className="text-sm font-medium text-gray-500">
                 Tanggal Masuk
               </h3>
               <p className="mt-1 text-sm text-gray-900">
-                {penghuni.tanggalMasuk}
+                {penghuni.tanggal_masuk || "-"}
               </p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-gray-500">Alamat</h3>
-              <p className="mt-1 text-sm text-gray-900">{penghuni.alamat}</p>
+              <h3 className="text-sm font-medium text-gray-500">
+                Tanggal Keluar
+              </h3>
+              <p className="mt-1 text-sm text-gray-900">
+                {penghuni.tanggal_keluar || "-"}
+              </p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-gray-500">Nomor KTP</h3>
-              <p className="mt-1 text-sm text-gray-900">{penghuni.ktp}</p>
+              <h3 className="text-sm font-medium text-gray-500">Nomor Rumah</h3>
+              <p className="mt-1 text-sm text-gray-900">
+                {penghuni.nomor_rumah || "-"}
+              </p>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-gray-500">Foto KTP</h3>
+              <div className="mt-2 max-h-96 overflow-y-auto border border-gray-300">
+                <img
+                  src={penghuni.foto_ktp_url}
+                  alt={penghuni.foto_ktp_filename}
+                />
+              </div>
             </div>
           </div>
         </div>
