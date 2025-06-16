@@ -17,7 +17,7 @@ cp .env.example .env
 ```
 - Ganti konfigurasi berikut:
 ```env
-VITE_API_BASE_URL=masukkan_url_api_backend
+REACT_APP_API_URL=masukkan_url_api_backend
 ```
 
 4. Jalankan Aplikasi
