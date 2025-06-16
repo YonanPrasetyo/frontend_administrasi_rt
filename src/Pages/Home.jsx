@@ -55,8 +55,8 @@ const Home = () => {
           {
             label: "Pendapatan",
             data: pendapatan,
-            borderColor: "rgba(54, 162, 235, 1)",
-            backgroundColor: "rgba(54, 162, 235, 0.2)",
+            borderColor: "rgb(41, 216, 18)",
+            backgroundColor: "rgba(73, 223, 36, 0.59)",
             fill: true,
             tension: 0.3,
           },

@@ -89,18 +89,18 @@ const PengeluaranList = () => {
                   {pengeluaran.keterangan}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap space-x-2">
-                  <button
-                    onClick={() => handleDelete(pengeluaran.id_pengeluaran)}
-                    className="text-red-600 hover:text-red-900"
-                  >
-                    Hapus
-                  </button>
                   <Link
                     to={`/pengeluaran/edit/${pengeluaran.id_pengeluaran}`}
                     className="text-yellow-600 hover:text-yellow-900"
                   >
                     Edit
                   </Link>
+                  <button
+                    onClick={() => handleDelete(pengeluaran.id_pengeluaran)}
+                    className="text-red-600 hover:text-red-900"
+                  >
+                    Hapus
+                  </button>
                 </td>
               </tr>
             ))}

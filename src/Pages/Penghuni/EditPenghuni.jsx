@@ -47,7 +47,7 @@ const EditPenghuni = () => {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">Tambah Penghuni</h1>
+      <h1 className="text-2xl font-bold mb-6">Edit Penghuni</h1>
 
       <div className="bg-white shadow rounded-lg p-6">
         <form onSubmit={handleSubmit}>

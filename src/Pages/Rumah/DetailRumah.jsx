@@ -155,7 +155,7 @@ const DetailRumah = () => {
               <p className="mt-1 text-sm text-gray-900">
                 <span
                   className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                    rumah.status_rumah === "dihuni"
+                    rumah.status_rumah === "tidak dihuni"
                       ? "bg-red-100 text-red-800"
                       : "bg-green-100 text-green-800"
                   }`}
