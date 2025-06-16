@@ -133,24 +133,22 @@ const RumahList = () => {
 
                 <td className="px-6 py-4 whitespace-nowrap">
                   {rumah.status_rumah === "dihuni" ? (
-                    <>
-                      <Link
-                        to={`/pembayaran/add/${rumah.id_rumah}`}
-                        className="text-indigo-600 hover:text-indigo-900 mr-2"
-                      >
-                        Bayar
-                      </Link>
-                      <Link
-                        to={`/rumah/history/${rumah.id_rumah}`}
-                        className="text-indigo-600 hover:text-indigo-900"
-                      >
-                        History
-                      </Link>
-                    </>
-                  ) : (
-                    "Tidak dihuni"
-                  )}
+                    <Link
+                      to={`/pembayaran/add/${rumah.id_rumah}`}
+                      className="text-indigo-600 hover:text-indigo-900 mr-2"
+                    >
+                      Bayar
+                    </Link>
+                  ) : ( "" )}
+
+                  <Link
+                    to={`/rumah/history/${rumah.id_rumah}`}
+                    className="text-indigo-600 hover:text-indigo-900"
+                  >
+                    History
+                  </Link>
                 </td>
+
                 <td className="px-6 py-4 whitespace-nowrap space-x-2">
                   <Link
                     to={`/rumah/detail/${rumah.id_rumah}`}

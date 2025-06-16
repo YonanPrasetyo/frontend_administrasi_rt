@@ -22,7 +22,7 @@ const PenghuniList = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    if (window.confirm("Apakah Anda yakin ingin menghapus penghuni ini?")) {
+    if (window.confirm("Apakah Anda yakin ingin menghapus penghuni ini?, dengan menghapus penghuni ini, semua data pembayaran yang dilakukan oleh penghuni ini akan terhapus. kami rekomendasikan cukup keluarkan dari rumah")) {
       try {
         await deletePenghuni(id);
         setPenghuni(penghuni.filter((item) => item.id_penghuni !== id));
