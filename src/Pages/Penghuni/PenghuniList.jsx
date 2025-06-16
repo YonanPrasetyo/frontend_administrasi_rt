@@ -25,7 +25,7 @@ const PenghuniList = () => {
     if (window.confirm("Apakah Anda yakin ingin menghapus penghuni ini?")) {
       try {
         await deletePenghuni(id);
-        setPenghuni(penghuni.filter((item) => item.id !== id));
+        setPenghuni(penghuni.filter((item) => item.id_penghuni !== id));
       } catch (err) {
         console.error("Error deleting penghuni:", err);
       }
