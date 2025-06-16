@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Chart from "chart.js/auto";
+import { Link } from "react-router-dom";
 import { getDashboardData } from "../Api/DashboardService";
 
 const Home = () => {
@@ -37,9 +38,7 @@ const Home = () => {
     const pengeluaran = dashboardData.per_bulan.map((item) =>
       parseInt(item.total_pengeluaran)
     );
-    const saldo = dashboardData.per_bulan.map((item) =>
-      parseInt(item.saldo)
-    );
+    const saldo = dashboardData.per_bulan.map((item) => parseInt(item.saldo));
 
     // Hapus grafik lama jika sudah ada
     if (chartInstance.current) {
@@ -103,10 +102,17 @@ const Home = () => {
   if (error)
     return <div className="text-center py-4 text-red-500">Error: {error}</div>;
 
-
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+        <Link
+          to="/laporan"
+          className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+        >
+          Laporan Per Bulan
+        </Link>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <div className="bg-white p-6 rounded-lg shadow">

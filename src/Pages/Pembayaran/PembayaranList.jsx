@@ -44,12 +44,6 @@ const PembayaranList = () => {
     <div>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Daftar Pembayaran</h1>
-        <Link
-          to="/pembayaran/add"
-          className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
-        >
-          Tambah Pembayaran
-        </Link>
       </div>
 
       <div className="bg-white shadow rounded-lg overflow-hidden">

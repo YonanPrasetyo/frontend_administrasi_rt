@@ -9,3 +9,13 @@ export const getDashboardData = async () => {
         throw error;
     }
 };
+
+export const laporanPerBulan = async () => {
+    try {
+        const response = await api.get("/laporan");
+        return response;
+    } catch (error) {
+        console.error("Error fetching laporan per bulan:", error);
+        throw error;
+    }
+};

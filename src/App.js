@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
+import Laporan from "./Pages/Laporan/Laporan"
 import PenghuniList from "./Pages/Penghuni/PenghuniList";
 import AddPenghuni from "./Pages/Penghuni/AddPenghuni";
 import EditPenghuni from "./Pages/Penghuni/EditPenghuni";
@@ -21,6 +22,7 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/laporan" element={<Laporan />} />
 
           {/* Penghuni Routes */}
           <Route path="/penghuni" element={<PenghuniList />} />
